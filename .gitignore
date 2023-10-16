@@ -1,0 +1,10 @@
+promptmr_examples/cmrxrecon/pretrained_models/
+promptmr_examples/fastmri/pretrained_models/
+promptmr_examples/cmrxrecon/__pycache__/
+promptmr_examples/cmrxrecon/dataset_cache.pkl
+promptmr_examples/fastmri/dataset_cache.pkl
+pl_modules/__pycache__/
+models/__pycache__/
+data/__pycache__/
+promptmr_examples/cmrxrecon/experiments/
+promptmr_examples/fastmri/experiments_fastmri_knee/
