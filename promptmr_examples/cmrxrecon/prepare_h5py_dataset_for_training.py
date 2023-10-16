@@ -1,8 +1,3 @@
-'''
-Author: Bingyu Xin
-Affiliation: Computer Science department, Rutgers University, NJ, USA
-Date: 2023-10-15
-'''
 
 import os
 import sys

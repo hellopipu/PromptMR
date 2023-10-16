@@ -107,7 +107,6 @@ def evaluate(args, recons_key):
         ) as recons, h5py.File(args.test_path / tgt_file.name, "r") as test:
             if args.acquisition and args.acquisition != target.attrs["acquisition"]:
                 continue
-            # print('debug: ', recons.attrs.keys())
             if args.acceleration and test.attrs["acceleration"] != args.acceleration:
                 continue
 

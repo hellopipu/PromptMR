@@ -1,4 +1,10 @@
-#################################### models ####################################
+'''
+Author: Bingyu Xin
+Affiliation: Computer Science department, Rutgers University, NJ, USA
+Paper: https://arxiv.org/abs/2309.13839
+Date: 2023-10-15
+'''
+
 import torch
 import torch.nn as nn
 import fastmri
@@ -496,10 +502,8 @@ class SensitivityModel(nn.Module):
 
 class PromptMR(nn.Module):
     """
-    A full variational network model.
+    An unrolled model for MR reconstruction, see https://arxiv.org/abs/2309.13839.
 
-    This model applies a combination of soft data consistency with a U-Net
-    regularizer. To use non-U-Net regularizers, use VarNetBlock.
     """
 
     def __init__(

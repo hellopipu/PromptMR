@@ -1,3 +1,8 @@
+"""
+Pytorch Lightning module to handle fastMRI and CMRxRecon data. 
+Modified from https://github.com/facebookresearch/fastMRI/blob/master/fastmri/pl_modules/data_module.py
+"""
+
 from argparse import ArgumentParser
 from pathlib import Path
 from typing import Callable, Optional, Union

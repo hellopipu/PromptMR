@@ -1,3 +1,10 @@
+'''
+Author: Bingyu Xin
+Affiliation: Computer Science department, Rutgers University, NJ, USA
+Paper: https://arxiv.org/abs/2309.13839
+Date: 2023-10-15
+'''
+
 from argparse import ArgumentParser
 
 import fastmri
@@ -9,18 +16,8 @@ from typing import List
 
 class PromptMrModule(MriModule):
     """
-    VarNet training module.
+    PromptMR training module.
 
-    This can be used to train variational networks from the paper:
-
-    A. Sriram et al. End-to-end variational networks for accelerated MRI
-    reconstruction. In International Conference on Medical Image Computing and
-    Computer-Assisted Intervention, 2020.
-
-    which was inspired by the earlier paper:
-
-    K. Hammernik et al. Learning a variational network for reconstruction of
-    accelerated MRI data. Magnetic Resonance inMedicine, 79(6):3055–3071, 2018.
     """
 
     def __init__(
