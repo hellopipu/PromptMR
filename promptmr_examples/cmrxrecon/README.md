@@ -50,7 +50,7 @@ CUDA_VISIBLE_DEVICES=1  python run_pretrained_promptmr_cmrxrecon_inference_from_
 
 ## use pretrained promptmr-16cascades model 
 CUDA_VISIBLE_DEVICES=1  python run_pretrained_promptmr_cmrxrecon_inference_from_matlab_data.py \
---input /research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData \
+--input /research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData/MultiCoil \
 --output /research/cbim/vast/bx64/PycharmProjects/cmr_challenge_results/reproduce_promptmr_16cascades_cmrxrecon \
 --model_path pretrained_models/promptmr-16cascades-epoch=11-step=258576.ckpt \
 --evaluate_set ValidationSet \
