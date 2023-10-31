@@ -1,6 +1,6 @@
 # Reproducing PromptMR results on CMRxRecon dataset
 
-All the following commands should be run under the `promptmr_examples/cmrxrecon` folder.
+All the following commands should be run under the `promptmr_examples/cmrxrecon` folder. 
 
 ## Download the CMRxRecon dataset
 Direct download the [CMRxRecon dataset](https://github.com/CmrxRecon/CMRxRecon) from the following links: 
@@ -12,7 +12,7 @@ Direct download the [CMRxRecon dataset](https://github.com/CmrxRecon/CMRxRecon) 
 
 ## Pretrained models
 
-We provide Google Drive links for downloading our models trained on the CMRxRecon Training Set (120 cases). You can verify the performance of these models on the [Validation Leaderboard](https://www.synapse.org/#!Synapse:syn51471091/wiki/622548) using the respective IDs.
+We provide Google Drive links for downloading our models trained on the CMRxRecon Training Set (120 cases). You can use the respective IDs to retrieve the corresponding performance results of these models on the [Validation Leaderboard](https://www.synapse.org/#!Synapse:syn51471091/wiki/622548). (As of October 31, 2023, `PromptMR-16cascades` delivers the best performance on the Leaderboard.)
 
 
 | Model              |# of Params     |Download Link                                                                              | Cine Leaderboard ID   | Mapping Leaderboard ID |
