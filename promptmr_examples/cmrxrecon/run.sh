@@ -15,6 +15,7 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_cmrxrecon.py \
 --combine_train_val True \
 --exp_name promptmr_trainval \
 --num_cascades 12 \
+--num_gpus 2 \
 --use_checkpoint
 
 ## train promptmr-16cascades model
@@ -28,6 +29,7 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_cmrxrecon.py \
 --combine_train_val True \
 --exp_name promptmr_16_cascades_trainval \
 --num_cascades 16 \
+--num_gpus 2 \
 --use_checkpoint
 
 
