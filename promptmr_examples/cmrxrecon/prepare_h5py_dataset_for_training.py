@@ -43,7 +43,7 @@ if __name__ == '__main__':
     parser.add_argument(
             "--data_path",
             type=str,
-            default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData",
+            default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData/MultiCoil",
             help="Path to the fully sampled cine MATLAB folder",
         )
 
