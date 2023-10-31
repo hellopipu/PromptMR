@@ -150,7 +150,7 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_cmrxrecon.py \
 
 ## Paper Results
 
-Results reported in the [paper](https://arxiv.org/abs/2309.13839), which trained on 100 training cases and evaluated on 20 validation cases.
+Below are the results as reported in the [paper](https://arxiv.org/abs/2309.13839), in which models were trained on 100 training cases and evaluated on 20 validation cases using PromptMR-12cascades. The released code can achieve better results than those presented in the paper. We have not released the code for the stage 2 refinement described in the paper, as it offers only marginal SSIM improvement to our PromptMR model.
 
 <details>
 <summary><strong>Quantitative Results</strong> (click to expand) </summary>
