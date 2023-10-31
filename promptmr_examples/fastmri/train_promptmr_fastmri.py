@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 sys.path.insert(0, os.path.dirname(os.path.dirname(pathlib.Path(__file__).parent.absolute())))
 
 from data.transforms import FastmriKneePromptMrDataTransform
-from pl_modules.data_module import FastmriKneeDataModule
+from pl_modules.fastmri_data_module import FastmriKneeDataModule
 from pl_modules.promptmr_module import PromptMrModule
 from data.subsample import create_mask_for_mask_type
 import pytorch_lightning as pl

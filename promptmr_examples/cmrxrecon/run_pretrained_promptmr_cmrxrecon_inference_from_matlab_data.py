@@ -99,7 +99,6 @@ def predict(f, num_cascades=12, model_path = '', bs1 = 1, stage=1, center_crop=F
             sens_feature_dim = [36, 48, 60],
             sens_prompt_dim = [12, 24, 36],
             
-            use_checkpoint=False,  # use checkpointing for GPU memory savings
             no_use_ca = False,
     )
 
@@ -164,8 +163,9 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=str, nargs='?', default='/output', help='output directory')
     parser.add_argument('--model_path', type=str, nargs='?', default='/model', help='model path')
     parser.add_argument('--center_crop', action='store_true', default=False, help='Enable center cropping for validation leaderboard submission')
-    parser.add_argument('--stage', type=int, choices=[1, 2], help='Choose the stage: 1 or 2')
+    parser.add_argument('--stage', type=int, default=1, choices=[1, 2], help='Choose the stage: 1 or 2. Currently only stage 1 is released, since the second stage only provides marginal SSIM improvement to our PromptMR model.')
     parser.add_argument('--evaluate_set', type=str, choices=["ValidationSet", "TestSet"], help='Choose the evaluation set: ValidationSet or TestSet')
+    parser.add_argument('--task', type=str, default='Both', choices=["Cine", "Mapping", "Both"], help='Choose to inference on which type of data: Cine, Mapping or Both')
     parser.add_argument('--batch_size', type=int, default=1, help='Batch size for the model.')
     parser.add_argument('--num_works', type=int, default=2, help='num of processors to load data.')
     parser.add_argument('--num_cascades', type=int, default=12, help='num of cascades of the unrolled model.')
@@ -177,6 +177,7 @@ if __name__ == '__main__':
     center_crop = args.center_crop
     stage = args.stage
     evaluate_set = args.evaluate_set
+    task = args.task
     bs1 = args.batch_size
     num_works = args.num_works
     num_cascades = args.num_cascades
@@ -186,8 +187,15 @@ if __name__ == '__main__':
 
 
     # get input file list
-    f_cine = sorted([file for file in glob.glob(join(input_dir, '**/*ax.mat'), recursive=True) if 'MultiCoil' in file and 'Cine' in file and evaluate_set in file])
-    f_mapping = sorted([file for file in glob.glob(join(input_dir, '**/*map.mat'), recursive=True) if 'MultiCoil' in file and 'Mapping' in file and evaluate_set in file])
+    if task == 'Mapping':
+        f_cine = []
+    else:
+        f_cine = sorted([file for file in glob.glob(join(input_dir, '**/*ax.mat'), recursive=True) if 'MultiCoil' in file and 'Cine' in file and evaluate_set in file])
+    if task == 'Cine':
+        f_mapping = []
+    else:
+        f_mapping = sorted([file for file in glob.glob(join(input_dir, '**/*map.mat'), recursive=True) if 'MultiCoil' in file and 'Mapping' in file and evaluate_set in file])
+    
     f = f_cine + f_mapping
     print(f'##############\n Cine files: {len(f_cine)}\n Mapping files: {len(f_mapping)}\n Total files: {len(f)}\n##############')
     

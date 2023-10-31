@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 sys.path.insert(0, os.path.dirname(os.path.dirname(pathlib.Path(__file__).parent.absolute())))
 
 from data.transforms import PromptMrDataTransform
-from pl_modules.data_module import CmrxReconDataModule
+from pl_modules.cmrxrecon_data_module import CmrxReconDataModule
 from pl_modules.promptmr_module import PromptMrModule
 from data.subsample import create_mask_for_mask_type
 import pytorch_lightning as pl
@@ -31,6 +31,7 @@ def cli_main(args):
     # ptl data module - this handles data loaders
     data_module = CmrxReconDataModule(
         data_path=args.data_path,
+        h5py_folder=args.h5py_folder,
         challenge=args.challenge,
         train_transform=train_transform,
         val_transform=val_transform,

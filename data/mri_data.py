@@ -211,7 +211,7 @@ class CmrxReconSliceDataset(torch.utils.data.Dataset):
             files = []
             for i in range(len(folders)):
                 files += list(folders[i].iterdir())
-                
+            # include mapping data 
             folders = list(Path(str(root).replace('Cine','Mapping')).iterdir())
             files2 = []
             for i in range(len(folders)):

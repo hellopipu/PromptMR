@@ -17,7 +17,7 @@ import fastmri
 import fastmri.data.transforms as T
 
 from models.promptmr import PromptMR
-from pl_modules.data_module import FastmriKneeSliceDataset
+from pl_modules.fastmri_data_module import FastmriKneeSliceDataset
 from data.transforms import FastmriKneePromptMrDataTransform
 
 

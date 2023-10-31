@@ -39,7 +39,7 @@ def split_train_val(h5_folder, train_num=100):
 if __name__ == '__main__':
     argv = sys.argv
     parser = argparse.ArgumentParser()
-    
+
     parser.add_argument(
             "--data_path",
             type=str,
@@ -58,8 +58,8 @@ if __name__ == '__main__':
     data_path = args.data_path
     save_folder_name = args.save_folder_name
 
-    fully_cine_matlab_folder = join(data_path, "MultiCoil/Cine/TrainingSet/FullSample")
-    fully_mapping_matlab_folder = join(data_path, "MultiCoil/Mapping/TrainingSet/FullSample")
+    fully_cine_matlab_folder = join(data_path, "Cine/TrainingSet/FullSample")
+    fully_mapping_matlab_folder = join(data_path, "Mapping/TrainingSet/FullSample")
 
     assert os.path.exists(fully_cine_matlab_folder), f"Path {fully_cine_matlab_folder} does not exist."
     assert os.path.exists(fully_mapping_matlab_folder), f"Path {fully_mapping_matlab_folder} does not exist."
