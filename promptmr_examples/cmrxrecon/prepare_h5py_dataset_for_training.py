@@ -39,20 +39,13 @@ def split_train_val(h5_folder, train_num=100):
 if __name__ == '__main__':
     argv = sys.argv
     parser = argparse.ArgumentParser()
-
+    
     parser.add_argument(
-        "--fully_cine_matlab_folder",
-        type=str,
-        default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData/MultiCoil/Cine/TrainingSet/FullSample",
-        help="Path to the fully sampled cine MATLAB folder",
-    )
-
-    parser.add_argument(
-        "--fully_mapping_matlab_folder",
-        type=str,
-        default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData/MultiCoil/Mapping/TrainingSet/FullSample",
-        help="Path to the fully sampled mapping MATLAB folder",
-    )
+            "--data_path",
+            type=str,
+            default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData",
+            help="Path to the fully sampled cine MATLAB folder",
+        )
 
     parser.add_argument(
         "--save_folder_name",
@@ -62,22 +55,27 @@ if __name__ == '__main__':
     )
 
     args = parser.parse_args() 
+    data_path = args.data_path
+    save_folder_name = args.save_folder_name
 
-    assert os.path.exists(args.fully_cine_matlab_folder), f"Path {args.fully_cine_matlab_folder} does not exist."
-    assert os.path.exists(args.fully_mapping_matlab_folder), f"Path {args.fully_mapping_matlab_folder} does not exist."
+    fully_cine_matlab_folder = join(data_path, "MultiCoil/Cine/TrainingSet/FullSample")
+    fully_mapping_matlab_folder = join(data_path, "MultiCoil/Mapping/TrainingSet/FullSample")
+
+    assert os.path.exists(fully_cine_matlab_folder), f"Path {fully_cine_matlab_folder} does not exist."
+    assert os.path.exists(fully_mapping_matlab_folder), f"Path {fully_mapping_matlab_folder} does not exist."
 
     # 0. get input file list
-    f_cine = sorted(glob.glob(join(args.fully_cine_matlab_folder, '**/*.mat'), recursive=True))
-    f_mapping = sorted(glob.glob(join(args.fully_mapping_matlab_folder, '**/*.mat'), recursive=True))
+    f_cine = sorted(glob.glob(join(fully_cine_matlab_folder, '**/*.mat'), recursive=True))
+    f_mapping = sorted(glob.glob(join(fully_mapping_matlab_folder, '**/*.mat'), recursive=True))
 
     f = f_cine + f_mapping
     print('total number of files: ', len(f))
-    print('cine cases: ', len(os.listdir(args.fully_cine_matlab_folder)),' , cine files: ', len(f_cine))
-    print('mapping cases: ', len(os.listdir(args.fully_mapping_matlab_folder)),' , mapping files: ', len(f_mapping))
+    print('cine cases: ', len(os.listdir(fully_cine_matlab_folder)),' , cine files: ', len(f_cine))
+    print('mapping cases: ', len(os.listdir(fully_mapping_matlab_folder)),' , mapping files: ', len(f_mapping))
 
     # 1. save as fastMRI style h5py files
     for ff in tqdm(f):
-        save_path = ff.replace('FullSample',args.save_folder_name).replace('.mat', '.h5')
+        save_path = ff.replace('FullSample',save_folder_name).replace('.mat', '.h5')
         if not os.path.isdir(os.path.dirname(save_path)):
             os.makedirs(os.path.dirname(save_path))
         filename = os.path.basename(ff)
@@ -117,8 +115,8 @@ if __name__ == '__main__':
         file.close()
     
     # 2. split first 100 cases as training set and the rest 20 cases as validation set
-    cine_h5_folder = args.fully_cine_matlab_folder.replace('FullSample',args.save_folder_name)
-    mapping_h5_folder = args.fully_mapping_matlab_folder.replace('FullSample',args.save_folder_name)
+    cine_h5_folder = fully_cine_matlab_folder.replace('FullSample',save_folder_name)
+    mapping_h5_folder = fully_mapping_matlab_folder.replace('FullSample',save_folder_name)
 
     split_train_val(cine_h5_folder, train_num=100)
     split_train_val(mapping_h5_folder, train_num=100)
