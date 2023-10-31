@@ -86,3 +86,8 @@ We provide Google Drive links for downloading our models trained on the CMRxReco
 | PromptMR-16cascades|108M            |[Link](https://drive.google.com/file/d/1YXB9M9pJ7JY4ld0D3l5a2hAU0UcuyJhN/view?usp=sharing) | 9741143               | 9741142                |
 
 **Note: The leaderboard evaluates only the small central crop area within three slices for each of the 60 validation cases, offering a limited representation of the overall reconstruction results.**
+
+## Quantitative Results
+![CMRxRecon Qualitative Results](../../assets/cmrxrecon_qualitative_lax_2ch.png)
+![CMRxRecon Qualitative Results](../../assets/cmrxrecon_qualitative_appendix_more.png)
+

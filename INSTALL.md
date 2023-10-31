@@ -9,9 +9,9 @@ git clone https://github.com/hellopipu/PromptMR.git
 cd PromptMR
 ```
 2. Create conda environment
-The Conda environment used can be recreated using the env.yml file:
+The Conda environment used can be recreated using the env.yaml file:
 ```bash
-conda env create -f env.yml
+conda env create -f env.yaml
 ```
 
 ## Dataset Download and Preparation
