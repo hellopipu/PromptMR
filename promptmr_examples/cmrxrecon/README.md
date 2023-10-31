@@ -6,8 +6,6 @@ Direct download the [CMRxRecon dataset](https://github.com/CmrxRecon/CMRxRecon) 
 | Platform           | Link                                                                                                  | Password    |
 |--------------------|-------------------------------------------------------------------------------------------------------|-------------|
 | Baidu Netdisk      | [Link](https://pan.baidu.com/s/1OXSInGc30gkA4RVYqo9Hqw)                                               | b6hj        |
-| One Drive          | [Link](https://1drv.ms/f/s!AsFeN7Sp8EZggsZiYwHLmgkdy75zOg?e=LK7bRY)                                   | Jhkn23Nke   |
-| One Drive: Zip     | [Link](https://1drv.ms/f/s!AsFeN7Sp8EZghYoClneOTL8eJA8PVQ?e=1Ssyxu)                                   | Gakn4jn.n3j |
 | Google Drive       | [Link](https://drive.google.com/drive/folders/1--8x5GCnx6Cd2p8ATKLS1bvr3Y0ISvNH?usp=sharing)          | N/A         |
 
 ## Preprocess the dataset
