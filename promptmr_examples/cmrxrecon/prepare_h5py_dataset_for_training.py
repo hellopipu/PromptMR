@@ -48,7 +48,7 @@ if __name__ == '__main__':
         )
 
     parser.add_argument(
-        "--save_folder_name",
+        "--h5py_folder",
         type=str,
         default="h5_FullSample",
         help="the folder name to save the h5py files",
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args() 
     data_path = args.data_path
-    save_folder_name = args.save_folder_name
+    save_folder_name = args.h5py_folder
 
     fully_cine_matlab_folder = join(data_path, "Cine/TrainingSet/FullSample")
     fully_mapping_matlab_folder = join(data_path, "Mapping/TrainingSet/FullSample")

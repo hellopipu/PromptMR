@@ -113,6 +113,13 @@ def build_args():
     )
 
     parser.add_argument(
+        "--num_gpus",
+        default=2,
+        type=int,
+        help="Number of GPUs to use",
+    )
+
+    parser.add_argument(
         "--exp_name",
         default="promptmr_train",
         type=str,
@@ -183,7 +190,7 @@ def build_args():
     # trainer config
     parser = pl.Trainer.add_argparse_args(parser)
     parser.set_defaults(
-        gpus=num_gpus,  # number of gpus to use
+        # gpus=num_gpus,  # number of gpus to use
         replace_sampler_ddp=False,  # this is necessary for volume dispatch during val
         strategy=backend,  # what distributed version to use
         seed=42,  # random seed
@@ -194,6 +201,7 @@ def build_args():
     )
 
     args = parser.parse_args()
+    args.gpus = args.num_gpus # override pl.Trainer gpus arg
     acc_folder = "acc_" + "_".join(map(str, args.accelerations))
     args.default_root_dir = default_root_dir / args.exp_name / acc_folder
     # configure checkpointing in checkpoint_dir

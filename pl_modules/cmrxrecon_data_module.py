@@ -340,6 +340,12 @@ class CmrxReconDataModule(pl.LightningDataModule):
             help="Path to fastMRI data root",
         )
         parser.add_argument(
+            "--h5py_folder",
+            default=None,
+            type=str,
+            help="folder name for converted h5py files",
+        )
+        parser.add_argument(
             "--test_path",
             default=None,
             type=Path,
