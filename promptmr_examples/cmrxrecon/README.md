@@ -33,7 +33,7 @@ gdown 1YXB9M9pJ7JY4ld0D3l5a2hAU0UcuyJhN
 
 ## Inference
 
-The following commands will reproduce the results of the pretrained PromptMR models on the CMRxRecon Validation Set. Please modify the `input` and `output` paths to your own paths of the downloaded CMRxRecon dataset and the output folder. `center_crop` is used to crop the central 2 slices, the first 3 time frames(for cine) or all contrasts (for mapping) and the central 1/6 area of the original images following the [submission tutorial](https://www.synapse.org/#!Synapse:syn51471091/wiki/622411), if you want to save the full volume, please remove `--center_crop` from the command. `num_cascades` is the number of cascades used in the unrolled model. `task` is to select to inference on which type of data, which can be `Cine` or `Mapping` or `Both`. Please reduce the `batch_size` if you encounter out of GPU memory error.
+The following commands will reproduce the results of the pretrained PromptMR models on the CMRxRecon Validation Set. Please modify the `input` and `output` to your own path of the downloaded CMRxRecon dataset and the output reconstruction path. `center_crop` is used to crop the central 2 slices, the first 3 time frames(for cine) or all contrasts (for mapping) and the central 1/6 area of the original images following the [submission tutorial](https://www.synapse.org/#!Synapse:syn51471091/wiki/622411), if you want to save the full reconstruction volume, please remove `--center_crop` from the command. `num_cascades` is the number of cascades used in the unrolled model. `task` is to select to inference on which type of data, which can be `Cine` or `Mapping` or `Both`. Please reduce the `batch_size` if you encounter out of GPU memory error.
 
 ```bash
 ## use pretrained promptmr-12cascades model 
@@ -65,7 +65,7 @@ CUDA_VISIBLE_DEVICES=1  python run_pretrained_promptmr_cmrxrecon_inference_from_
 
 ### Preprocess the training dataset
 
-For efficient data access during training, it's advisable to convert MATLAB files in TrainingSet to fastMRI-style h5py format. Please modify the `data_path` in the following command to your own path of the downloaded CMRxRecon dataset. The converted h5py files will be saved in the `h5py_folder` folder. After the conversion, the data will be automatically split into 100 training and 20 validation cases.
+For efficient data access during training, it's advisable to convert the original MATLAB data files in TrainingSet to fastMRI-style h5py format. Please modify the `data_path` in the following command to your own path of the downloaded CMRxRecon dataset. The converted h5py files will be saved in the `h5py_folder` folder. After the conversion, the data will be automatically split into 100 training and 20 validation cases.
 
 ```bash
 python prepare_h5py_dataset_for_training.py \
