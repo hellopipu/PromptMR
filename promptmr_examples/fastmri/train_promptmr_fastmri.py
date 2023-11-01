@@ -94,7 +94,7 @@ def build_args():
     parser = ArgumentParser()
 
     # basic args
-    num_gpus = 2
+    # num_gpus = 2
     backend = "ddp_find_unused_parameters_false"
     batch_size = 1
 
@@ -109,6 +109,13 @@ def build_args():
         choices=("train", "test"),
         type=str,
         help="Operation mode",
+    )
+
+    parser.add_argument(
+        "--num_gpus",
+        default=2,
+        type=int,
+        help="Number of GPUs to use",
     )
 
     parser.add_argument(
@@ -182,7 +189,7 @@ def build_args():
     # trainer config
     parser = pl.Trainer.add_argparse_args(parser)
     parser.set_defaults(
-        gpus=num_gpus,  # number of gpus to use
+        # gpus=num_gpus,  # number of gpus to use
         replace_sampler_ddp=False,  # this is necessary for volume dispatch during val
         strategy=backend,  # what distributed version to use
         seed=42,  # random seed
@@ -193,6 +200,7 @@ def build_args():
     )
 
     args = parser.parse_args()
+    args.gpus = args.num_gpus # override pl.Trainer gpus arg
     acc_folder = "acc_" + "_".join(map(str, args.accelerations))
     args.default_root_dir = args.default_root_dir / args.exp_name / acc_folder
     # configure checkpointing in checkpoint_dir

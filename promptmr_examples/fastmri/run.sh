@@ -1,3 +1,8 @@
+# split 99 val and 100 test from original multicoil_val set
+python split_val_test.py \
+--data_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_val_origin \
+--mask_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test_mask
+
 # train
 CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --challenge multicoil \
@@ -17,7 +22,7 @@ CUDA_VISIBLE_DEVICES=0 python run_pretrained_promptmr_fastmri_knee_inference.py 
 --output_path /research/cbim/vast/bx64/PycharmProjects/fastmri_results/reproduce_promptmr_knee
 
 # evaluate
-python evaluate.py --target-path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test_tmp \
+python evaluate.py --target-path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test_full \
 --predictions-path /research/cbim/vast/bx64/PycharmProjects/fastmri_results/reproduce_promptmr_knee/reconstructions \
 --test-path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test \
 --challenge multicoil \
