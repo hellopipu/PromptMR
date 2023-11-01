@@ -9,7 +9,7 @@ Download knee `multicoil_train` and `multicoil_val` set from fastMRI website: <h
 ## Split the `multicoil_val` dataset
 
 Since the online evaluation platform for original `multicoil_test` set is no longer available ([see here](
-https://github.com/facebookresearch/fastMRI/discussions/293)), we can run the following command to automatically split original 199 cases in `multicoil_val` set into 99 validation cases and 100 test cases. Before running, please first rename the original `multicoil_val` folder to `multicoil_val_origin`. (If you have already downloaded the `multicoil_test`, rename that folder to `multicoil_test_origin` as well.). Then, download the sampling mask files I used for 100 splited test cases from [here](https://drive.google.com/file/d/1YY6fifXo5SNFLAhO5M6V9abmVgXs7NvJ/view?usp=sharing) (fastMRI `random` type sampling mask, 46 files for acc=4, 54 files for acc=8) . Finally, executing the following command will automatically generate our split `multicoil_val` and `multicoil_test` folders. Please modify the `data_path` and `mask_path` to reflect your own dataset and sampling mask file locations.
+https://github.com/facebookresearch/fastMRI/discussions/293)), we can run the following command to automatically split original 199 cases in `multicoil_val` set into 99 validation cases and 100 test cases. Before running, please first rename the original `multicoil_val` folder to `multicoil_val_origin`. (If you have already downloaded the `multicoil_test`, rename that folder to `multicoil_test_origin` as well.) Then, download the sampling mask files I used for 100 splited test cases from [here](https://drive.google.com/file/d/1YY6fifXo5SNFLAhO5M6V9abmVgXs7NvJ/view?usp=sharing) (fastMRI `random` type sampling mask, 46 files for acc=4, 54 files for acc=8) . Finally, executing the following command will automatically generate our split `multicoil_val` and `multicoil_test` folders. Please modify the `data_path` and `mask_path` to reflect your own dataset and sampling mask file locations.
 
 ```bash
 python split_val_test.py \
@@ -70,6 +70,7 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil \
 --combine_train_val False \
 --exp_name promptmr_train \
+--num_gpus 2 \
 --no_use_ca \
 --use_checkpoint
 ```
