@@ -95,7 +95,7 @@ def build_args():
     parser = ArgumentParser()
 
     # basic args
-    num_gpus = 2
+    # num_gpus = 2
     backend = "ddp_find_unused_parameters_false"
     batch_size = 1
 
