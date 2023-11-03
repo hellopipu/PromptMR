@@ -4,6 +4,7 @@ This repository contains the pytorch implementation of PromptMR, an unrolled mod
 Reconstruction](https://arxiv.org/abs/2309.13839) for more details.
 
 [![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2309.13839)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/fill-the-k-space-and-refine-the-image/mri-reconstruction-on-fastmri-knee-val-8x)](https://paperswithcode.com/sota/mri-reconstruction-on-fastmri-knee-val-8x?p=fill-the-k-space-and-refine-the-image)
 
 
 ## Updates
