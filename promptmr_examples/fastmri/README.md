@@ -23,14 +23,14 @@ We provide Google Drive links for downloading our models trained on the fastMRI 
 
 | Model              |# of Params     |Download Link                                                                              |
 |--------------------|----------------|-------------------------------------------------------------------------------------------|
-| PromptMR-12cascades|80M             |[Link](https://drive.google.com/file/d/1YXgrAoa9MqqSf-6GzXGVkk5-MlQ68w_P/view?usp=sharing) |
+| PromptMR-12cascades|80M             |[Link](https://drive.google.com/file/d/1HBlwrmOaMQycohznYrg-uu4GmiVfWjkL/view?usp=sharing) |
 
 You can also directly use the following command to download the models to the `pretrained_models` folder:
 
 ```bash
 mkdir pretrained_models
 cd pretrained_models
-gdown 1YXgrAoa9MqqSf-6GzXGVkk5-MlQ68w_P
+gdown 1HBlwrmOaMQycohznYrg-uu4GmiVfWjkL
 ```
 
 ## Inference
@@ -39,7 +39,7 @@ The following command will reproduce the results of the pretrained PromptMR mode
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_pretrained_promptmr_fastmri_knee_inference.py --challenge varnet_knee_mc \
---state_dict_file pretrained_models/promptmr-12cascades-epoch=35-step=625356.ckpt \
+--state_dict_file pretrained_models/promptmr-12cascades-epoch=43-step=764324.ckpt \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test \
 --output_path /research/cbim/vast/bx64/PycharmProjects/fastmri_results/reproduce_promptmr_knee
 ```
@@ -78,8 +78,9 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 ## Results
 
 <details>
-<summary><strong>Qualitative Results</strong> (click to expand) </summary>
+<summary><strong>Quantitative Results</strong> (click to expand) </summary>
 
-![fastMRI](../../assets/fastmri_quantitative-poster.png)
+![fastMRI](../../assets/fastmri_quantitative.png)
 
+Note: In this table, E2E-VarNet and HUMUS-Net(-L) were assessed using their respective official pretrained models. However, E2E-VarNet has only made available the model that was trained on the combined training and original validation sets with acceleration factors of `x4` and `x8`. This implies that our split test set was already exposed to E2E-VarNet during its training phase. Consequently, the results of E2E-VarNet should be considered for reference purposes only and not subjected to rigorous comparison with other models. Both HUMUS-Net(-L) and PromptMR were trained solely on the training set with a `x8` acceleration factor.
 </details>
