@@ -9,7 +9,7 @@ Reconstruction](https://arxiv.org/abs/2309.13839) for more details.
 
 ## Updates
 - [2023/10/15] 🔥 We have released training and inference code, along with pretrained PromptMR models, for both the [CMRxRecon](./promptmr_examples/cmrxrecon/README.md) and [fastMRI multi-coil knee](./promptmr_examples/fastmri/README.md) datasets. These models exceed the performance of existing state-of-the-art methods.
-- [2023/10/12] 🥇 We secured 1st place in both Cine and T1/T2 Mapping reconstruction tasks in CMRxRecon Challenge during MICCAI 2023!
+- [2023/10/12] 🥇 We secured 1st place in both the Cine and T1/T2 Mapping tasks for cardiac MR reconstruction in the [CMRxRecon Challenge](https://cmrxrecon.github.io/) during MICCAI 2023! [[Final ranking]](https://www.synapse.org/#!Synapse:syn51471091/wiki/624102)
 
 ## Method
 
