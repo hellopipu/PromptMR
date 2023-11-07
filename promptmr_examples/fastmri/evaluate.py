@@ -141,7 +141,7 @@ if __name__ == "__main__":
         "--test-path",
         type=pathlib.Path,
         required=True,
-        help="Path to reconstructions",
+        help="Path to test data, used to get the acceleration factor to filter x4 or x8 reconstructions for evaluation",
     )
     parser.add_argument(
         "--challenge",

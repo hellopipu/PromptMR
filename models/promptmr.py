@@ -160,13 +160,34 @@ class PromptUnet(nn.Module):
                  n_dec_cab = [2, 2, 3],
                  n_skip_cab = [1, 1, 1],
                  n_bottleneck_cab = 3,
+                 no_use_ca = False,
+                 learnable_input_prompt=False,
                  kernel_size=3, 
                  reduction=4, 
                  act=nn.PReLU(), 
                  bias=False,
-                 no_use_ca = False,
-                 learnable_input_prompt=False
                  ):
+        """
+        PromptUnet, see in paper: https://arxiv.org/abs/2309.13839
+        Args:
+            in_chans: Number of channels in the input.
+            out_chans: Number of channels in the output.
+            n_feat0: Number of output channels in the first convolution layer.
+            feature_dim: Number of output channels in each level of the encoder.
+            prompt_dim: Number of channels in the prompt at each level of the decoder.
+            len_prompt: number of components in the prompt at each level of the decoder.
+            prompt_size: spatial size of the prompt at each level of the decoder.
+            n_enc_cab: number of channel attention blocks (CAB) in each level of the encoder.
+            n_dec_cab: number of channel attention blocks (CAB) in each level of the decoder.
+            n_skip_cab: number of channel attention blocks (CAB) in each skip connection.
+            n_bottleneck_cab: number of channel attention blocks (CAB) in the bottleneck.
+            kernel_size: kernel size of the convolution layers.
+            reduction: reduction factor for the channel attention blocks (CAB).
+            act: activation function.
+            bias: whether to use bias in the convolution layers.
+            no_use_ca: whether to *not* use channel attention blocks (CAB).
+            learnable_input_prompt: whether to learn the input prompt in the PromptBlock.
+        """
         super(PromptUnet, self).__init__()
 
         # Feature extraction
@@ -230,8 +251,8 @@ class NormPromptUnet(nn.Module):
         in_chans: int = 10,
         out_chans: int = 10,
         n_feat0: int = 48,
-        feature_dim: List[int] = [36, 48, 60],
-        prompt_dim: List[int] = [12, 24, 36],
+        feature_dim: List[int] = [72, 96, 120],
+        prompt_dim: List[int] = [24, 48, 72],
         len_prompt: List[int] = [5, 5, 5],
         prompt_size: List[int] = [64, 32, 16],
         n_enc_cab: List[int] = [2, 3, 3],
@@ -239,15 +260,9 @@ class NormPromptUnet(nn.Module):
         n_skip_cab: List[int] = [1, 1, 1],
         n_bottleneck_cab: int = 3,
         no_use_ca: bool = False,
+        learnable_input_prompt=False,
     ):
-        """
-        Args:
-            chans: Number of output channels of the first convolution layer.
-            num_pools: Number of down-sampling and up-sampling layers.
-            in_chans: Number of channels in the input to the U-Net model.
-            out_chans: Number of channels in the output to the U-Net model.
-            drop_prob: Dropout probability.
-        """
+
         super().__init__()
         self.unet = PromptUnet(in_chans=in_chans,
                                 out_chans = out_chans, 
@@ -260,7 +275,9 @@ class NormPromptUnet(nn.Module):
                                 n_dec_cab = n_dec_cab,
                                 n_skip_cab = n_skip_cab,
                                 n_bottleneck_cab = n_bottleneck_cab,
-                                no_use_ca = no_use_ca)
+                                no_use_ca = no_use_ca,
+                                learnable_input_prompt=learnable_input_prompt,
+                                )
 
     def complex_to_chan_dim(self, x: torch.Tensor) -> torch.Tensor:
         b, c, h, w, two = x.shape
@@ -411,16 +428,24 @@ class SensitivityModel(nn.Module):
     ):
         """
         Args:
-            chans: Number of output channels of the first convolution layer.
-            num_pools: Number of down-sampling and up-sampling layers.
-            in_chans: Number of channels in the input to the U-Net model.
-            out_chans: Number of channels in the output to the U-Net model.
-            drop_prob: Dropout probability.
+            in_chans: Number of channels in the input.
+            out_chans: Number of channels in the output.
+            num_adj_slices: Number of adjacent slices.
+            n_feat0: Number of top-level feature channels for PromptUnet.
+            feature_dim: feature dim for each level in PromptUnet.
+            prompt_dim: prompt dim for each level in PromptUnet.
+            len_prompt: number of prompt component in each level.
+            prompt_size: prompt spatial size.
+            n_enc_cab: number of CABs (channel attention Blocks) in DownBlock.
+            n_dec_cab: number of CABs (channel attention Blocks) in UpBlock.
+            n_skip_cab: number of CABs (channel attention Blocks) in SkipBlock.
+            n_bottleneck_cab: number of CABs (channel attention Blocks) in
+                BottleneckBlock.
+            no_use_ca: not using channel attention.
             mask_center: Whether to mask center of k-space for sensitivity map
                 calculation.
         """
         super().__init__()
-        # print(locals())
         self.mask_center = mask_center
         self.num_adj_slices = num_adj_slices
         self.norm_unet = NormPromptUnet(in_chans=in_chans,
@@ -502,7 +527,8 @@ class SensitivityModel(nn.Module):
 
 class PromptMR(nn.Module):
     """
-    An unrolled model for MR reconstruction, see https://arxiv.org/abs/2309.13839.
+    An prompt-learning based unrolled model for multi-coil MR reconstruction, 
+    see https://arxiv.org/abs/2309.13839.
 
     """
 
@@ -510,44 +536,56 @@ class PromptMR(nn.Module):
         self,
         num_cascades: int = 12,
         num_adj_slices: int = 5,
-        n_feat0= 48,
-        feature_dim = [72, 96, 120],
-        prompt_dim = [24, 48, 72],
-        len_prompt = [5, 5, 5],
-        prompt_size = [64, 32, 16],
-        n_enc_cab = [2, 3, 3],
-        n_dec_cab = [2, 2, 3],
-        n_skip_cab = [1, 1, 1],
-        n_bottleneck_cab = 3,
-        no_use_ca = False,
-        sens_n_feat0=24,
+        n_feat0: int = 48,
+        feature_dim: List[int] = [72, 96, 120],
+        prompt_dim: List[int] = [24, 48, 72],
+        sens_n_feat0: int =24,
         sens_feature_dim: List[int] = [36, 48, 60],
         sens_prompt_dim: List[int] = [12, 24, 36],
-        sens_len_prompt = None,
-        sens_prompt_size = None,
-        sens_n_enc_cab = None,
-        sens_n_dec_cab = None,
-        sens_n_skip_cab = None,
-        sens_n_bottleneck_cab = None,
-        sens_no_use_ca = None,
+        len_prompt: List[int] = [5, 5, 5],
+        prompt_size: List[int] = [64, 32, 16],
+        n_enc_cab: List[int] = [2, 3, 3],
+        n_dec_cab: List[int] = [2, 2, 3],
+        n_skip_cab: List[int] = [1, 1, 1],
+        n_bottleneck_cab: int = 3,
+        no_use_ca: bool = False,
+        sens_len_prompt: Optional[List[int]] = None,
+        sens_prompt_size: Optional[List[int]] = None,
+        sens_n_enc_cab: Optional[List[int]] = None,
+        sens_n_dec_cab: Optional[List[int]] = None,
+        sens_n_skip_cab: Optional[List[int]] = None,
+        sens_n_bottleneck_cab: Optional[List[int]] = None,
+        sens_no_use_ca: Optional[bool] = None,
         mask_center: bool = True,
         use_checkpoint: bool = False,
     ):
         """
         Args:
-            num_cascades: Number of cascades (i.e., layers) for variational
-                network.
-            sens_chans: Number of channels for sensitivity map U-Net.
-            sens_pools Number of downsampling and upsampling layers for
-                sensitivity map U-Net.
-            chans: Number of channels for cascade U-Net.
-            pools: Number of downsampling and upsampling layers for cascade
-                U-Net.
+            num_cascades: Number of cascades (i.e., layers) for variational network.
+            num_adj_slices: Number of adjacent slices.
+            n_feat0: Number of top-level feature channels for PromptUnet.
+            feature_dim: feature dim for each level in PromptUnet.
+            prompt_dim: prompt dim for each level in PromptUnet.
+            sens_n_feat0: Number of top-level feature channels for sense map
+                estimation PromptUnet in PromptMR.
+            sens_feature_dim: feature dim for each level in PromptUnet for
+                sensitivity map estimation (SME) network.
+            sens_prompt_dim: prompt dim for each level in PromptUnet in
+                sensitivity map estimation (SME) network.
+            len_prompt: number of prompt component in each level.
+            prompt_size: prompt spatial size.
+            n_enc_cab: number of CABs (channel attention Blocks) in DownBlock.
+            n_dec_cab: number of CABs (channel attention Blocks) in UpBlock.
+            n_skip_cab: number of CABs (channel attention Blocks) in SkipBlock.
+            n_bottleneck_cab: number of CABs (channel attention Blocks) in
+                BottleneckBlock.
+            no_use_ca: not using channel attention.
             mask_center: Whether to mask center of k-space for sensitivity map
                 calculation.
+            use_checkpoint: Whether to use checkpointing to trade compute for GPU memory.
         """
         super().__init__()
-        # print(locals())
+        assert num_adj_slices % 2 == 1, "num_adj_slices must be odd"
         self.num_adj_slices = num_adj_slices
         self.center_slice = num_adj_slices//2
         self.sens_net = SensitivityModel(

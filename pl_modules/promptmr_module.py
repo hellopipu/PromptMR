@@ -18,16 +18,18 @@ class PromptMrModule(MriModule):
     """
     PromptMR training module.
 
+    Paper: https://arxiv.org/abs/2309.13839
+
     """
 
     def __init__(
         self,
         num_cascades: int = 12,
         num_adj_slices: int = 5,
-        n_feat0=48,
-        feature_dim = [72, 96, 120],
-        prompt_dim = [24, 48, 72],
-        sens_n_feat0=24,
+        n_feat0: int =48,
+        feature_dim: List[int] = [72, 96, 120],
+        prompt_dim: List[int] = [24, 48, 72],
+        sens_n_feat0: int =24,
         sens_feature_dim: List[int] = [36, 48, 60],
         sens_prompt_dim: List[int] = [12, 24, 36],
         len_prompt: List[int] = [5, 5, 5],
@@ -46,32 +48,35 @@ class PromptMrModule(MriModule):
     ):
         """
         Args:
-            num_cascades: Number of cascades (i.e., layers) for variational
-                network.
-            pools: Number of downsampling and upsampling layers for cascade
-                U-Net.
-            chans: Number of channels for cascade U-Net.
-            sens_pools: Number of downsampling and upsampling layers for
-                sensitivity map U-Net.
-            sens_chans: Number of channels for sensitivity map U-Net.
+            num_cascades: Number of cascades (i.e., layers) for variational network.
+            num_adj_slices: Number of adjacent slices.
+            n_feat0: Number of top-level feature channels for PromptUnet.
+            feature_dim: feature dim for each level in PromptUnet.
+            prompt_dim: prompt dim for each level in PromptUnet.
+            sens_n_feat0: Number of top-level feature channels for sense map
+                estimation PromptUnet in PromptMR.
+            sens_feature_dim: feature dim for each level in PromptUnet for
+                sensitivity map estimation (SME) network.
+            sens_prompt_dim: prompt dim for each level in PromptUnet in
+                sensitivity map estimation (SME) network.
+            len_prompt: number of prompt component in each level.
+            prompt_size: prompt spatial size.
+            n_enc_cab: number of CABs (channel attention Blocks) in DownBlock.
+            n_dec_cab: number of CABs (channel attention Blocks) in UpBlock.
+            n_skip_cab: number of CABs (channel attention Blocks) in SkipBlock.
+            n_bottleneck_cab: number of CABs (channel attention Blocks) in
+                BottleneckBlock.
+            no_use_ca: not using channel attention.
             lr: Learning rate.
             lr_step_size: Learning rate step size.
             lr_gamma: Learning rate gamma decay.
             weight_decay: Parameter for penalizing weights norm.
-            num_sense_lines: Number of low-frequency lines to use for sensitivity map
-                computation, must be even or `None`. Default `None` will automatically
-                compute the number from masks. Default behaviour may cause some slices to
-                use more low-frequency lines than others, when used in conjunction with
-                e.g. the EquispacedMaskFunc defaults. To prevent this, either set
-                `num_sense_lines`, or set `skip_low_freqs` and `skip_around_low_freqs`
-                to `True` in the EquispacedMaskFunc. Note that setting this value may
-                lead to undesired behaviour when training on multiple accelerations
-                simultaneously.
+            use_checkpoint: Whether to use checkpointing to trade compute for GPU memory.
+
         """
         super().__init__(**kwargs)
-        print(locals())
+
         self.save_hyperparameters()
-        assert num_adj_slices % 2 == 1, "num_adj_slices must be odd"
 
         self.num_cascades = num_cascades
         self.num_adj_slices = num_adj_slices
@@ -100,8 +105,14 @@ class PromptMrModule(MriModule):
             sens_n_feat0=self.sens_n_feat0,
             sens_feature_dim = self.sens_feature_dim,
             sens_prompt_dim = self.sens_prompt_dim,
+            len_prompt = self.len_prompt,
+            prompt_size = self.prompt_size,
+            n_enc_cab = self.n_enc_cab,
+            n_dec_cab = self.n_dec_cab,
+            n_skip_cab = self.n_skip_cab,
+            n_bottleneck_cab = self.n_bottleneck_cab,
+            no_use_ca = self.no_use_ca,
             use_checkpoint=use_checkpoint,
-            no_use_ca=self.no_use_ca,
         )
 
         self.loss = fastmri.SSIMLoss()
