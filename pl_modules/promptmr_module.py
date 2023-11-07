@@ -89,7 +89,15 @@ class PromptMrModule(MriModule):
         self.sens_feature_dim = sens_feature_dim
         self.sens_prompt_dim = sens_prompt_dim
 
+        self.len_prompt = len_prompt
+        self.prompt_size = prompt_size
+        self.n_enc_cab = n_enc_cab
+        self.n_dec_cab = n_dec_cab
+        self.n_skip_cab = n_skip_cab
+        self.n_bottleneck_cab = n_bottleneck_cab
+
         self.no_use_ca = no_use_ca
+        self.use_checkpoint = use_checkpoint
 
         self.lr = lr
         self.lr_step_size = lr_step_size

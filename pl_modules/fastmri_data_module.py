@@ -421,8 +421,7 @@ class FastmriKneeDataModule(pl.LightningDataModule):
         )
         parser.add_argument(
             "--combine_train_val",
-            default=False,
-            type=bool,
+            action="store_true",
             help="Whether to combine train and val splits for training",
         )
 

@@ -68,7 +68,6 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --accelerations 8 \
 --mask_type random \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil \
---combine_train_val False \
 --exp_name promptmr_train \
 --num_gpus 2 \
 --no_use_ca \

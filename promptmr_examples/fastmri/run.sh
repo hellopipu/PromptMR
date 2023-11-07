@@ -10,14 +10,13 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --accelerations 8 \
 --mask_type random \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil \
---combine_train_val False \
 --exp_name promptmr_train \
 --num_gpus 2 \
 --no_use_ca \
 --use_checkpoint
 
-# validate using pretrained model
-CUDA_VISIBLE_DEVICES=5 python run_pretrained_promptmr_fastmri_knee_inference.py --challenge varnet_knee_mc \
+# inference using pretrained model
+CUDA_VISIBLE_DEVICES=1 python run_pretrained_promptmr_fastmri_knee_inference.py --challenge varnet_knee_mc \
 --state_dict_file pretrained_models/promptmr-12cascades-epoch=43-step=764324.ckpt \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test \
 --output_path /research/cbim/vast/bx64/PycharmProjects/fastmri_results/reproduce_promptmr_knee
