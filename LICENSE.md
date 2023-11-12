@@ -1,27 +1,21 @@
-## ACADEMIC PUBLIC LICENSE
+MIT License
 
-### Permissions
-:heavy_check_mark: Non-Commercial use
-:heavy_check_mark: Modification
-:heavy_check_mark: Distribution
-:heavy_check_mark: Private use
+Copyright (c) 2022 Zalan Fabian
 
-### Limitations
-:x: Commercial Use
-:x: Liability
-:x: Warranty
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-### Conditions
-:information_source: License and copyright notice
-:information_source: Same License
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-PromptMR is free for use in noncommercial settings: at academic institutions for teaching and research use, and at non-profit research organizations.
-You can use PromptMR in your research, academic work, non-commercial work, projects and personal work. We only ask you to credit us appropriately. 
-
-You have the right to use the software, to distribute copies, to receive source code, to change the software and distribute your modifications or the modified software.
-If you distribute verbatim or modified copies of this software, they must be distributed under this license.
-This license guarantees that you're safe when using PromptMR in your work, for teaching or research.
-This license guarantees that PromptMR will remain available free of charge for nonprofit use.
-You can modify PromptMR to your purposes, and you can also share your modifications.
-
-If you would like to use PromptMR in commercial settings, contact us so we can discuss options. Send an email to bx64@cs.rutgers.edu.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
