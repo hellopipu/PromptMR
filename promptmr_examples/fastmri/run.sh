@@ -3,11 +3,23 @@ python split_val_test.py \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_val_origin \
 --mask_path /research/cbim/datasets/fastMRI/knee_multicoil/multicoil_test_mask
 
-# train
+# train with acc=8 only
 CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --challenge multicoil \
 --center_fractions 0.04 \
 --accelerations 8 \
+--mask_type random \
+--data_path /research/cbim/datasets/fastMRI/knee_multicoil \
+--exp_name promptmr_train \
+--num_gpus 2 \
+--no_use_ca \
+--use_checkpoint
+
+# train with acc=4 and 8 only
+CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
+--challenge multicoil \
+--center_fractions 0.04 \
+--accelerations 4 8 \
 --mask_type random \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil \
 --exp_name promptmr_train \
