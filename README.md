@@ -52,7 +52,7 @@ Quantitative results on fastMRI multi-coil knee dataset.
 
 ## Citation
 If you found this repository useful to you, please consider giving a star ⭐️ and citing our paper:
-```
+```bibtex
 @article{xin2023fill,
   title={Fill the K-Space and Refine the Image: Prompting for Dynamic and Multi-Contrast MRI Reconstruction},
   author={Xin, Bingyu and Ye, Meng and Axel, Leon and Metaxas, Dimitris N},
