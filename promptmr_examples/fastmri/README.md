@@ -19,19 +19,19 @@ python split_val_test.py \
 
 ## Pretrained models
 
-We provide Google Drive links for downloading our models trained on the fastMRI MultiCoil Knee Training Set.
+We provide Google Drive links for downloading our models trained on the fastMRI MultiCoil Knee train set.
 
-| Model              |Training Set   |Training Acceleration|# of Params     | NMSE/PSNR/SSIM 4x| NMSE/PSNR/SSIM 8x|Download Link                            |
-|--------------------|---------------|---------------------|----------------|-------------------------|---------------|---------------------------------------------------|
-| [E2E-VarNet](https://github.com/facebookresearch/fastMRI)         |train+val|4x and 8x            |30M             |0.0053/ 39.37/ 0.9236    |0.0087/ 37.30/ 0.8936         |can be found in their official repo |
-| [HUMUS-Net](https://github.com/z-fabian/HUMUS-Net)          |train|8x only              |109M            |-                        |0.0090/ 37.20/ 0.8946         |can be found in their official repo |
-| [HUMUS-Net-L](https://github.com/z-fabian/HUMUS-Net)        |train|8x only              |228M            |-                        |0.0086/ 37.45/ 0.8955         |can be found in their official repo |
-| `PromptMR`           |train|8x only              |80M             |-                        |0.0080/ 37.78/ 0.8983         |[Link](https://drive.google.com/file/d/1HBlwrmOaMQycohznYrg-uu4GmiVfWjkL/view?usp=sharing) |
-| `PromptMR`           |train|4x and 8x            |80M             |**0.0051**/ **39.71**/ **0.9264**    |**0.0080**/ **37.78**/ **0.8984**        |[Link](https://drive.google.com/file/d/1afLCO3C_S4e-q7QCt04Ksmv34jETrFQ7/view?usp=sharing) |
+| Model                                                       |Training Set |Training Acceleration|# of Params     | NMSE/PSNR/SSIM 4x                | NMSE/PSNR/SSIM 8x          |Download Link                            |
+|-------------------------------------------------------------|------------ |---------------------|----------------|----------------------------------|----------------------------|-----------------------------------------|
+| [E2E-VarNet](https://github.com/facebookresearch/fastMRI)   |train+val    |4x and 8x            |30M             |0.0053/39.37/0.9236               |0.0087/37.30/0.8936         |in their official repo                   |
+| [HUMUS-Net](https://github.com/z-fabian/HUMUS-Net)          |train        |8x only              |109M            |-                                 |0.0090/37.20/0.8946         |in their official repo                   |
+| [HUMUS-Net-L](https://github.com/z-fabian/HUMUS-Net)        |train        |8x only              |228M            |-                                 |0.0086/37.45/0.8955         |in their official repo                   |
+| `PromptMR`                                                  |train        |8x only              |80M             |-                                 |0.0080/37.78/0.8983         |[Link1](https://drive.google.com/file/d/1HBlwrmOaMQycohznYrg-uu4GmiVfWjkL/view?usp=sharing) |
+| `PromptMR`                                                  |train        |4x and 8x            |80M             |**0.0051**/**39.71**/**0.9264**   |**0.0080**/**37.78**/**0.8984**        |[Link2](https://drive.google.com/file/d/1afLCO3C_S4e-q7QCt04Ksmv34jETrFQ7/view?usp=sharing) |
 
-Note: In this table, `train` and `val` means the original train set and validation set, respectively. Evaluations were performed on the split test set (100 cases), which is from original validation set (199 cases). `E2E-VarNet` and `HUMUS-Net(-L)` were assessed using their respective official pretrained models. However, `E2E-VarNet` has only made available the model that was trained on the combined training and original validation sets with acceleration factors of `4x` and `8x`. This implies that our split test set was already exposed to `E2E-VarNet` during its training phase. Consequently, the results of `E2E-VarNet` should be considered for reference purposes only and not subjected to rigorous comparison with other models.
+Note: In this table, `train` and `val` means the original train set and validation set, respectively. Evaluations were performed on the split test set (100 cases), which is from original validation set (199 cases). `E2E-VarNet` and `HUMUS-Net(-L)` were assessed using their respective official pretrained models. However, `E2E-VarNet` has only made available the model that was trained on the combined training and original validation sets with acceleration factors of `4x` and `8x`. *This implies that our split test set was already exposed to `E2E-VarNet` during its training phase*. Consequently, the results of `E2E-VarNet` should be considered for reference purposes only and not subjected to rigorous comparison with other models.
 
-You can also directly use the following command to download the models to the `pretrained_models` folder:
+You can directly use the following command to download our `PromptMR` models to the `pretrained_models` folder:
 
 ```bash
 mkdir pretrained_models
