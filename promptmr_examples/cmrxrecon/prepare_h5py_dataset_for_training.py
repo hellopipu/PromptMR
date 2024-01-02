@@ -44,7 +44,7 @@ if __name__ == '__main__':
             "--data_path",
             type=str,
             default="/research/cbim/datasets/fastMRI/CMRxRecon/MICCAIChallenge2023/ChallengeData/MultiCoil",
-            help="Path to the fully sampled cine MATLAB folder",
+            help="Path to the multi-coil MATLAB folder",
         )
 
     parser.add_argument(
@@ -84,11 +84,16 @@ if __name__ == '__main__':
         # Open the HDF5 file in write mode
         file = h5py.File(save_path, 'w')
 
-        # Create a dataset
+        # Create a dataset 
+        # kdata is of shape (time, slice, coil, phase_enc, readout) for cine data; and (contrast, slice, coil, phase_enc, readout) for mapping data
+        # we need to reshape and transpose it to (time* slice, coil, readout, phase_enc) as 'kspace' for fastMRI style
         save_kdata = kdata.reshape(-1,kdata.shape[2],kdata.shape[3],kdata.shape[4]).transpose(0,1,3,2)
         file.create_dataset('kspace', data=save_kdata)
 
-        file.create_dataset('reconstruction_rss', data=image.reshape(-1,image.shape[3],image.shape[2]))
+        # image is of shape (time, slice, phase_enc, readout) for cine data; and (contrast, slice, phase_enc, readout) for mapping data
+        # we need to reshape and transpose it to (time * slice, readout, phase_enc) as 'reconstruction_rss' for fastMRI style
+        save_image = image.reshape(-1,image.shape[2],image.shape[3]).transpose(0,2,1)
+        file.create_dataset('reconstruction_rss', data=save_image)
         file.attrs['max'] = image.max()
         file.attrs['norm'] = np.linalg.norm(image)
 
