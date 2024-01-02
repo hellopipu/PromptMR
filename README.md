@@ -8,19 +8,20 @@ Reconstruction](https://arxiv.org/abs/2309.13839) for more details.
 
 
 ## Updates
-- [2023/10/15] 🔥 We have released training and inference code, along with pretrained PromptMR models, for both the [CMRxRecon](./promptmr_examples/cmrxrecon/README.md) and [fastMRI multi-coil knee](./promptmr_examples/fastmri/README.md) datasets. These models exceed the performance of existing state-of-the-art methods.
+- [2023/10/15] 🔥 We have released training and inference code, along with pretrained PromptMR models, for both the [CMRxRecon](./promptmr_examples/cmrxrecon/README.md) and [fastMRI multi-coil knee](./promptmr_examples/fastmri/README.md) datasets.
+
 - [2023/10/12] 🥇 We secured 1st place in both the Cine and T1/T2 Mapping tasks for cardiac MR reconstruction in the [CMRxRecon Challenge](https://cmrxrecon.github.io/) during MICCAI 2023! [[Final ranking]](https://www.synapse.org/#!Synapse:syn51471091/wiki/624102)
 
 ## Method
 
 Overview of PromptMR: an all-in-one unrolled model for MRI reconstruction. Adjacent inputs, depicted in image domain for visual clarity, provide neighboring k-space information for reconstruction. To accommodate different input varieties, the input-type adaptive visual prompt is integrated into each cascade of the unrolled architecture to guide the reconstruction process.
 
-![PromptMR](assets/promptmr-poster.png)
+![PromptMR](assets/promptmr.png)
 
 
 Overview of the PromptUnet: the denoiser in each cascade of PromptMR. The PromptBlocks can generate adaptively learned prompts across multiple levels, which integrate with decoder features in the UpBlocks to allow rich hierachical context learning.
 
-![PromptUnet](assets/promptunet-poster.png)
+![PromptUnet](assets/promptunet.png)
 
 ## Installation and Data Preparation
 
@@ -31,23 +32,6 @@ See [INSTALL.md](INSTALL.md) for installation instructions and data preparation 
 [CMRxRecon dataset](promptmr_examples/cmrxrecon/README.md)
 
 [FastMRI multi-coil knee dataset](promptmr_examples/fastmri/README.md)
-
-<!-- ## Quantitative Results
-Quantitative results on CMRxRecon dataset. 
-
-![CmrxRecon](assets/cmrxrecon_quantitative.png)
-
-Quantitative results on fastMRI multi-coil knee dataset. 
-
-![fastMRI](assets/fastmri_quantitative-poster.png)
-
-## Qualitative Results
-
-![Alt text](assets/lax_2ch.png)
-
-![Alt text](assets/appendix_more.png) -->
-
-
 
 
 ## Citation
@@ -64,3 +48,10 @@ If you found this repository useful to you, please consider giving a star ⭐️
 ## Acknowledgements
 [E2E-VarNet](https://github.com/facebookresearch/fastMRI), [HUMUS-Net](https://github.com/z-fabian/HUMUS-Net), [PromptIR](https://github.com/va1shn9v/PromptIR), [CMRxRecon](https://github.com/CmrxRecon/CMRxRecon)
 
+
+<details>
+<summary>statistics</summary>
+
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=hellopipu/PromptMR)
+
+</details>

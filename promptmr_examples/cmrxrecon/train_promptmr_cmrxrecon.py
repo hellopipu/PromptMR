@@ -36,7 +36,7 @@ def cli_main(args):
         train_transform=train_transform,
         val_transform=val_transform,
         test_transform=test_transform,
-        combine_train_val=args.combine_train_val,
+        combine_train_val=args.combine_train_val, # combine train and val data for train
         test_split=args.test_split,
         test_path=args.test_path,
         sample_rate=args.sample_rate,

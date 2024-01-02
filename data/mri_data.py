@@ -237,23 +237,25 @@ class CmrxReconSliceDataset(torch.utils.data.Dataset):
         else:
             logging.info(f"Using dataset cache from {self.dataset_cache_file}.")
             self.raw_samples = dataset_cache[root]
-            if 'train' in str(root):
-                raw_samples_t1 = []
-                raw_samples_t2 = []
-                raw_samples_lax = []
-                raw_samples_sax = []
-                for ii in self.raw_samples:
-                    fname_ii = str(ii.fname)
-                    if 'T1' in fname_ii:
-                        raw_samples_t1.append(ii)
-                    elif 'T2' in fname_ii:
-                        raw_samples_t2.append(ii)
-                    elif 'lax' in fname_ii:
-                        raw_samples_lax.append(ii)
-                    elif 'sax' in fname_ii:
-                        raw_samples_sax.append(ii)
-                self.raw_samples = raw_samples_t1*2 + raw_samples_t2*5 + raw_samples_lax*3 + raw_samples_sax
-#                 self.raw_samples = raw_samples_t1[:len(raw_samples_t1)//5]*2 + raw_samples_t2[:len(raw_samples_t2)//5]*5 + raw_samples_lax[:len(raw_samples_lax)//5]*3 + raw_samples_sax[:len(raw_samples_sax)//5]
+
+        # balance the different type of training data 
+        if 'train' in str(root):
+            raw_samples_t1 = []
+            raw_samples_t2 = []
+            raw_samples_lax = []
+            raw_samples_sax = []
+            for ii in self.raw_samples:
+                fname_ii = str(ii.fname)
+                if 'T1' in fname_ii:
+                    raw_samples_t1.append(ii)
+                elif 'T2' in fname_ii:
+                    raw_samples_t2.append(ii)
+                elif 'lax' in fname_ii:
+                    raw_samples_lax.append(ii)
+                elif 'sax' in fname_ii:
+                    raw_samples_sax.append(ii)
+            self.raw_samples = raw_samples_t1*2 + raw_samples_t2*5 + raw_samples_lax*3 + raw_samples_sax
+        # self.raw_samples = self.raw_samples[0:1000]  # for quick debug
 
         # subsample if desired
         if sample_rate < 1.0:  # sample by slice

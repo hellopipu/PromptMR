@@ -8,3 +8,8 @@ models/__pycache__/
 data/__pycache__/
 promptmr_examples/cmrxrecon/experiments/
 promptmr_examples/fastmri/experiments_fastmri_knee/
+check_dataset_cache.ipynb
+.gitignore
+.ipynb_checkpoints/
+check_cmrxrecon_inference_from_model.ipynb
+promptmr_examples/cmrxrecon/check_data_generation.ipynb

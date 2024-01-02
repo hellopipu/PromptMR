@@ -195,7 +195,7 @@ def build_args():
         seed=42,  # random seed
         deterministic=False,  # makes things slower, but deterministic
         default_root_dir=default_root_dir,  # directory for logs and checkpoints
-        max_epochs=36,  # max number of epochs
+        max_epochs=45,  # max number of epochs
         gradient_clip_val=0.01
     )
 

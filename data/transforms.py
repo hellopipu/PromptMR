@@ -5,10 +5,62 @@ import torch
 
 import fastmri
 
-from fastmri.data.subsample import MaskFunc
-import fastmri.data.transforms as T
+from data.subsample import MaskFunc
 from fastmri import fft2c, ifft2c, rss_complex, complex_abs
 
+def to_tensor(data: np.ndarray) -> torch.Tensor:
+    """
+    Convert numpy array to PyTorch tensor.
+
+    For complex arrays, the real and imaginary parts are stacked along the last
+    dimension.
+
+    Args:
+        data: Input numpy array.
+
+    Returns:
+        PyTorch version of data.
+    """
+    if np.iscomplexobj(data):
+        data = np.stack((data.real, data.imag), axis=-1)
+
+    return torch.from_numpy(data)
+
+def apply_mask(
+    data: torch.Tensor,
+    mask_func: MaskFunc,
+    offset: Optional[int] = None,
+    seed: Optional[Union[int, Tuple[int, ...]]] = None,
+    padding: Optional[Sequence[int]] = None,
+) -> Tuple[torch.Tensor, torch.Tensor, int]:
+    """
+    Subsample given k-space by multiplying with a mask.
+
+    Args:
+        data: The input k-space data. This should have at least 3 dimensions,
+            where dimensions -3 and -2 are the spatial dimensions, and the
+            final dimension has size 2 (for complex values).
+        mask_func: A function that takes a shape (tuple of ints) and a random
+            number seed and returns a mask.
+        seed: Seed for the random number generator.
+        padding: Padding value to apply for mask.
+
+    Returns:
+        tuple containing:
+            masked data: Subsampled k-space data.
+            mask: The generated mask.
+            num_low_frequencies: The number of low-resolution frequency samples
+                in the mask.
+    """
+    shape = (1,) * len(data.shape[:-3]) + tuple(data.shape[-3:])
+    mask, num_low_frequencies = mask_func(shape, offset, seed)
+    if padding is not None:
+        mask[..., : padding[0], :] = 0
+        mask[..., padding[1] :, :] = 0  # padding value inclusive on right of zeros
+
+    masked_data = data * mask + 0.0  # the + 0.0 removes the sign of the zeros
+
+    return masked_data, mask, num_low_frequencies
 
 class PromptMRSample(NamedTuple):
     """
@@ -79,13 +131,13 @@ class PromptMrDataTransform:
         """
 
         if target is not None:
-            target_torch = T.to_tensor(target)
+            target_torch = to_tensor(target)
             max_value = attrs["max"]
         else:
             target_torch = torch.tensor(0)
             max_value = 0.0
 
-        kspace_torch = T.to_tensor(kspace)
+        kspace_torch = to_tensor(kspace)
         seed = None if not self.use_seed else tuple(map(ord, fname)) # so in validation, the same fname (volume) will have the same acc
         #TODO: cine file does not have left padding
         acq_start = 0
@@ -93,7 +145,7 @@ class PromptMrDataTransform:
         crop_size = (attrs["recon_size"][0], attrs["recon_size"][1])
 
         if self.mask_func is not None:
-            masked_kspace, mask_torch, num_low_frequencies = T.apply_mask(
+            masked_kspace, mask_torch, num_low_frequencies = apply_mask(
                 kspace_torch, self.mask_func, seed=seed, padding=(acq_start, acq_end)
             )
 
@@ -222,13 +274,13 @@ class FastmriKneePromptMrDataTransform:
         is_testing = (target is None)
 
         if target is not None:
-            target_torch = T.to_tensor(target)
+            target_torch = to_tensor(target)
             max_value = attrs["max"]
         else:
             target_torch = torch.tensor(0)
             max_value = 0.0
 
-        kspace_torch = T.to_tensor(kspace)
+        kspace_torch = to_tensor(kspace)
 
         if not is_testing:
             kspace_torch = self._to_uniform_size(kspace_torch)
@@ -248,7 +300,7 @@ class FastmriKneePromptMrDataTransform:
         crop_size = (attrs["recon_size"][0], attrs["recon_size"][1])
 
         if self.mask_func is not None:
-            masked_kspace, mask_torch, num_low_frequencies = T.apply_mask(
+            masked_kspace, mask_torch, num_low_frequencies = apply_mask(
                 kspace_torch, self.mask_func, seed=seed, padding=(acq_start, acq_end)
             )
 
