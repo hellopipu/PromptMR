@@ -16,12 +16,16 @@ Reconstruction](https://arxiv.org/abs/2309.13839) for more details.
 
 Overview of PromptMR: an all-in-one unrolled model for MRI reconstruction. Adjacent inputs, depicted in image domain for visual clarity, provide neighboring k-space information for reconstruction. To accommodate different input varieties, the input-type adaptive visual prompt is integrated into each cascade of the unrolled architecture to guide the reconstruction process.
 
-![PromptMR](assets/promptmr.png)
-
+<div align="center">
+    <img src="assets/promptmr.png" width="900"/>
+</div>
 
 Overview of the PromptUnet: the denoiser in each cascade of PromptMR. The PromptBlocks can generate adaptively learned prompts across multiple levels, which integrate with decoder features in the UpBlocks to allow rich hierachical context learning.
 
-![PromptUnet](assets/promptunet.png)
+<div align="center">
+    <img src="assets/promptunet.png" width="500"/>
+</div>
+
 
 ## Installation and Data Preparation
 
