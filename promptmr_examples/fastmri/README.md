@@ -68,7 +68,7 @@ python evaluate.py \
 
 ## Training
 
-The following command will train the PromptMR model on the fastMRI MultiCoil Knee Training Set with `x8` acceleration. Please modify the `data_path` to reflect your own dataset location. `center_fractions` specifies the low frequency fractions, while `accelerations` defines sampling rate of the mask. The `mask_type` is the type of the sampling mask (for the fastMRI knee dataset, we use the `random` type). Use `no_use_ca` to disable channel attention . The checkpoints and log files will be saved in the folder specified by `exp_name` . The `use_checkpoint` enables a [technique](https://pytorch.org/docs/stable/checkpoint.html#torch.utils.checkpoint.checkpoint) that trades compute for memory, which is useful when GPU memory is limited.
+The following command will train the PromptMR model on the fastMRI MultiCoil Knee Training Set. Please modify the `data_path` to reflect your own dataset location. `center_fractions` specifies the low frequency fractions, while `accelerations` defines sampling rate of the mask. The `mask_type` is the type of the sampling mask (for the fastMRI knee dataset, we use the `random` type). Use `no_use_ca` to disable channel attention . The checkpoints and log files will be saved in the folder specified by `exp_name` . The `use_checkpoint` enables a [technique](https://pytorch.org/docs/stable/checkpoint.html#torch.utils.checkpoint.checkpoint) that trades compute for memory, which is useful when GPU memory is limited.
 
 ```bash
 # train with acc=8 only
@@ -83,10 +83,10 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --no_use_ca \
 --use_checkpoint
 
-# train with acc=4 and 8 only
+# train with acc=4 and 8
 CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --challenge multicoil \
---center_fractions 0.04 \
+--center_fractions 0.08 0.04 \
 --accelerations 4 8 \
 --mask_type random \
 --data_path /research/cbim/datasets/fastMRI/knee_multicoil \
