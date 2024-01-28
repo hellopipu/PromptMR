@@ -44,6 +44,7 @@ class PromptMrModule(MriModule):
         lr_gamma: float = 0.1,
         weight_decay: float = 0.01,
         use_checkpoint: bool = False,
+        low_mem: bool = False,
         **kwargs,
     ):
         """
@@ -72,6 +73,7 @@ class PromptMrModule(MriModule):
             lr_gamma: Learning rate gamma decay.
             weight_decay: Parameter for penalizing weights norm.
             use_checkpoint: Whether to use checkpointing to trade compute for GPU memory.
+            low_mem: Whether to compute sensitivity map coil by coil to save GPU memory.
 
         """
         super().__init__(**kwargs)
@@ -98,6 +100,7 @@ class PromptMrModule(MriModule):
 
         self.no_use_ca = no_use_ca
         self.use_checkpoint = use_checkpoint
+        self.low_mem = low_mem
 
         self.lr = lr
         self.lr_step_size = lr_step_size
@@ -120,7 +123,8 @@ class PromptMrModule(MriModule):
             n_skip_cab = self.n_skip_cab,
             n_bottleneck_cab = self.n_bottleneck_cab,
             no_use_ca = self.no_use_ca,
-            use_checkpoint=use_checkpoint,
+            use_checkpoint=self.use_checkpoint,
+            low_mem = self.low_mem
         )
 
         self.loss = fastmri.SSIMLoss()
@@ -326,6 +330,9 @@ class PromptMrModule(MriModule):
         )
         parser.add_argument(
             "--use_checkpoint", action="store_true", help="Use checkpoint (default: False)"
+        )
+        parser.add_argument(
+            "--low_mem", action="store_true", help="consume less memory by computing sens_map coil by coil (default: False)"
         )
 
         return parser

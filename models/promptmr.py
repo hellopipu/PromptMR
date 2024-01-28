@@ -424,6 +424,7 @@ class SensitivityModel(nn.Module):
         n_bottleneck_cab: int = 3,
         no_use_ca: bool = False,
         mask_center: bool = True,
+        low_mem: bool = False,
 
     ):
         """
@@ -448,6 +449,7 @@ class SensitivityModel(nn.Module):
         super().__init__()
         self.mask_center = mask_center
         self.num_adj_slices = num_adj_slices
+        self.low_mem = low_mem
         self.norm_unet = NormPromptUnet(in_chans=in_chans,
                                 out_chans = out_chans,
                                 n_feat0=n_feat0,
@@ -502,6 +504,18 @@ class SensitivityModel(nn.Module):
 
         return pad.type(torch.long), num_low_frequencies_tensor.type(torch.long)
 
+    def compute_sens(self, model:nn.Module, images: torch.Tensor, compute_per_coil: bool) -> torch.Tensor:
+        # batch_size * n_coils
+        bc = images.shape[0]
+        if compute_per_coil:
+            output = []
+            for i in range(bc):
+                output.append(model(images[i].unsqueeze(0)))
+            output = torch.cat(output, dim=0)
+        else:
+            output = model(images)
+        return output
+
     def forward(
         self,
         masked_kspace: torch.Tensor,
@@ -521,7 +535,7 @@ class SensitivityModel(nn.Module):
 
         # estimate sensitivities
         return self.divide_root_sum_of_squares(
-            self.batch_chans_to_chan_dim(self.norm_unet(images), batches)
+            self.batch_chans_to_chan_dim(self.compute_sens(self.norm_unet,images,self.low_mem), batches)
         )
 
 
@@ -558,6 +572,7 @@ class PromptMR(nn.Module):
         sens_no_use_ca: Optional[bool] = None,
         mask_center: bool = True,
         use_checkpoint: bool = False,
+        low_mem: bool = False,
     ):
         """
         Args:
@@ -583,6 +598,7 @@ class PromptMR(nn.Module):
             mask_center: Whether to mask center of k-space for sensitivity map
                 calculation.
             use_checkpoint: Whether to use checkpointing to trade compute for GPU memory.
+            low_mem: Whether to compute sensitivity map coil by coil to save GPU memory.
         """
         super().__init__()
         assert num_adj_slices % 2 == 1, "num_adj_slices must be odd"
@@ -601,6 +617,7 @@ class PromptMR(nn.Module):
             n_bottleneck_cab = sens_n_bottleneck_cab if sens_n_bottleneck_cab is not None else n_bottleneck_cab,
             no_use_ca = sens_no_use_ca if sens_no_use_ca is not None else no_use_ca,
             mask_center=mask_center,
+            low_mem=low_mem,
 
         )
         self.cascades = nn.ModuleList(

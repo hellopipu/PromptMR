@@ -59,6 +59,7 @@ def cli_main(args):
         sens_feature_dim = args.sens_feature_dim,
         sens_prompt_dim = args.sens_prompt_dim,
 
+        no_use_ca = args.no_use_ca,
         len_prompt = args.len_prompt,
         prompt_size = args.prompt_size,
         n_enc_cab = args.n_enc_cab,
@@ -70,8 +71,9 @@ def cli_main(args):
         lr_step_size=args.lr_step_size,
         lr_gamma=args.lr_gamma,
         weight_decay=args.weight_decay,
+
         use_checkpoint=args.use_checkpoint,
-        no_use_ca = args.no_use_ca,
+        low_mem=args.low_mem,
     )
 
     # ------------
