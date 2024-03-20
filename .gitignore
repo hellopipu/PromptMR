@@ -13,3 +13,6 @@ check_dataset_cache.ipynb
 .ipynb_checkpoints/
 check_cmrxrecon_inference_from_model.ipynb
 promptmr_examples/cmrxrecon/check_data_generation.ipynb
+promptmr_examples/fastmri/multicoil_test_mask/
+promptmr_examples/fastmri/check_mask_diff.ipynb
+promptmr_examples/cmrxrecon/run_pretrained_promptmr_cmrxrecon_inference_from_matlab_data_fast.py

@@ -95,3 +95,9 @@ CUDA_VISIBLE_DEVICES=0,1 python train_promptmr_fastmri.py \
 --no_use_ca \
 --use_checkpoint
 ```
+
+## FAQ
+
+Q: How is `multicoil_test_mask` generated?
+
+A: The masks were generated randomly using the same code that used for applying random masks to fully-sampled data during training. `generate_test_masks.py` contains the code for generating the masks we provided in google drive.
