@@ -4,12 +4,7 @@ All the following commands should be run under the `promptmr_examples/cmrxrecon`
 
 ## Download the CMRxRecon dataset
 
-Direct download the [CMRxRecon dataset](https://github.com/CmrxRecon/CMRxRecon) from the following links:
-
-| Platform           | Link                                                                                                  | Password    |
-|--------------------|-------------------------------------------------------------------------------------------------------|-------------|
-| Baidu Netdisk      | [Link](https://pan.baidu.com/s/1OXSInGc30gkA4RVYqo9Hqw)                                               | b6hj        |
-| Google Drive       | [Link](https://drive.google.com/drive/folders/1--8x5GCnx6Cd2p8ATKLS1bvr3Y0ISvNH?usp=sharing)          | N/A         |
+Please refer to https://cmrxrecon.github.io/ for more information.
 
 ## Pretrained models
 

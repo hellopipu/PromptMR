@@ -36,9 +36,9 @@ See [INSTALL.md](INSTALL.md) for installation instructions and data preparation 
 
 ## Training/Inference Codes & Pretrained models
 
-[CMRxRecon dataset](promptmr_examples/cmrxrecon/README.md)
+[CMRxRecon dataset](promptmr_examples/cmrxrecon)
 
-[FastMRI multi-coil knee dataset](promptmr_examples/fastmri/README.md)
+[FastMRI multi-coil knee dataset](promptmr_examples/fastmri)
 
 
 ## Citation
