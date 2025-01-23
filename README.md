@@ -8,7 +8,7 @@ Reconstruction](https://arxiv.org/abs/2309.13839) for more details.
 
 
 ## Updates
-
+- [2025/01/23] 🚀 We are excited to announce the release of our enhanced model, PromptMR+. Check our new repo here: https://github.com/hellopipu/PromptMR-plus.
 - [2024/01/04] 📃 We provide the [additional PromptMR evaluation results](additional_results.md) on the [calgary-campinas](https://sites.google.com/view/calgary-campinas-dataset/mr-reconstruction-challenge?authuser=0) and [fastMRI Multi-coil Brain](https://fastmri.med.nyu.edu/) dataset. Pretrained models and code will be released in the future.
 
 - [2023/10/15] 🔥 We have released training and inference code, along with pretrained PromptMR models, for both the [CMRxRecon](./promptmr_examples/cmrxrecon/README.md) and [fastMRI multi-coil knee](./promptmr_examples/fastmri/README.md) datasets.
